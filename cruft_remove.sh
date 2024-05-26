@@ -15,14 +15,21 @@ read -p "How many days is too old?: " old
 
 readarray -t f < <(find "${folder}" -maxdepth 1 -type f -mtime +"${old}")
 
-readarray -t wcf < <(printf "%s" "${f[@]}" 2> /dev/null | wc -l)
+readarray -t wcf < <(printf "%s\n" "${f[@]}" 2> /dev/null | wc -l)
 
 readarray -t fn < <(printf "%s\n" "${f[@]}")
 
-if [[ "${wcf[@]}" -gt 0 ]]
+if [[ "${wcf[@]}" -eq 1 ]] && [[ $(printf "%s" "${f[@]}" 2> /dev/null | wc -l) -eq 0 ]]
+then
+        wcf2=$(( "${wcf[@]}" - 1 ))
+else
+        readarray -t wcf2 < <(printf "%s\n" "${f[@]}" 2> /dev/null | wc -l)
+fi
+
+if [[ "${wcf2[@]}" -gt 0 ]]
 then
         echo " "
-        echo "You have ${wcf[@]} file(s) to be removed"
+        echo "You have ${wcf2[@]} file(s) to be removed"
 
         echo " "
 
@@ -77,4 +84,3 @@ else
         sleep 1
         exit 0
 fi
-        
