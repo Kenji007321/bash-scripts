@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# Author: Kenji Nakajima
+# Date Created: 2024/5/26
+# Date Modified: 2024/5/31
+
+# Description
+# Find and delete files that haven't been modified for a certain period of time
+
+# Usage
+# cruft_remover.sh 
+
 read -p "Enter folder for cruft cleanup (\".\" for current directory): " folder
 
 if [[ ! -e ${folder} ]]
