@@ -21,7 +21,7 @@ case $output1 in
         y|Y|yes|Yes)
                 sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3,4
                 echo ""
-                sleep 1
+                sleep 0.5
                 ;;
         n|N|no|No)
                 ;;
