@@ -1,6 +1,6 @@
 # Author: Kenji Nakajima
 # Last update: '2024/07/13'
-# Description: Interactive useradd script (add multiple users at once)
+# Description: Interactive useradd script (create multiple users at once)
 
 
 read -p "Print all 'user:uuid:guid' from /etc/passwd?([y]/[n]): " output1
