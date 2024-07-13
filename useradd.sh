@@ -3,10 +3,10 @@
 # Description: Interactive useradd script (add multiple users at once)
 
 
-read -p "Do you want to print all user:uuid information?([y]/[n]): " output1
+read -p "Print all 'user:uuid:guid' from /etc/passwd?([y]/[n]): " output1
 case $output1 in
         y|Y|yes|Yes)
-                sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3
+                sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3,4
                 echo ""
                 sleep 1
                 ;;
@@ -25,7 +25,8 @@ do
         passwd "$i"
 if [[ $? -eq 0 ]]
 then
-        user=$(sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3 | grep "$i")
+        user=$(sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3,4 | grep "$i")
+        echo "     (user:uuid:guid)"
         echo "User "\'$user\'" created"
         echo ""
 else
@@ -37,10 +38,10 @@ done
 
 if [[ $? -eq 0 ]]
 then
-        read -p "Do you want to view all user:uuid information?([y]/[n]): " output2
+        read -p "View all 'user:uuid:guid' from /etc/passwd?([y]/[n]): " output2
         case $output2 in
                 y|Y|yes|Yes)
-                        sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3 | less
+                        sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3,4 | less
                         ;;
                 n|N|no|No)
                         exit 1
