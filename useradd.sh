@@ -2,6 +2,19 @@
 # Last update: '2024/07/13'
 # Description: Interactive useradd script (create multiple users at once)
 
+for t in "$@"
+do
+        check=$(grep "$t" /etc/passwd 2> /dev/null | cut -d ':' -f 1)
+        if [[ "$t" = "$check" ]]
+        then
+                echo "User "$t" already exists."
+                exit 1
+        else
+                echo "Creating user "$t".."
+        fi
+done
+
+sleep 0.5
 
 read -p "Print all 'user:uuid:guid' from /etc/passwd?([y]/[n]): " output1
 case $output1 in
