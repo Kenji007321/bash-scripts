@@ -27,10 +27,10 @@ if [[ $? -eq 0 ]]
 then
         user=$(sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3,4 | grep "$i")
         echo "     (user:uuid:guid)"
-        echo "User "\'$user\'" created"
+        echo "User "\'$user\'" created."
         echo ""
 else
-        echo "Failed to create user"
+        echo "Failed to create user."
         echo ""
         exit 2
 fi
