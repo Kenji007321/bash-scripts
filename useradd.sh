@@ -22,7 +22,13 @@ for i in "$@"
 do
         read -p "Enter UUID for "$i": " id
         useradd -u "$id" "$i"
+if [[ $? -eq 0 ]]
+then
         passwd "$i"
+else
+        exit 1
+fi
+        
 if [[ $? -eq 0 ]]
 then
         user=$(sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3,4 | grep "$i")
