@@ -22,6 +22,7 @@ for i in "$@"
 do
         read -p "Enter UUID for "$i": " id
         useradd -u "$id" "$i"
+        passwd "$i"
 if [[ $? -eq 0 ]]
 then
         user=$(sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3 | grep "$i")
@@ -45,7 +46,7 @@ then
                         exit 1
                         ;;
                 *)
-                        echo "Invalid option." >&2
+                        echo "Exiting.." >&2
                         exit 1
                         ;;
         esac
