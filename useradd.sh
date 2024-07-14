@@ -1,6 +1,7 @@
 # Author: Kenji Nakajima
-# Last update: '2024/07/13'
+# Last update: '2024/07/14'
 # Description: Interactive useradd script (create multiple users at once)
+
 
 for t in "$@"
 do
@@ -49,7 +50,7 @@ then
         echo "User "\'$user\'" created."
         echo ""
 else
-        echo "Failed to create user."
+        echo "Failed to create user or user password."
         echo ""
         exit 1
 fi
