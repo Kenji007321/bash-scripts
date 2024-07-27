@@ -95,11 +95,9 @@ if [[ $? -eq 0 ]]
 then
         user=$(sort -t: -k3n /etc/passwd | cut -d ':' -f 1,3,4 | grep "$i")
         echo "     (user:uuid:guid)"
-        echo "User "\'$user\'" created."
+        echo "User "\'$user\'" created successfully."
         echo ""
 else
-        echo "Failed to create user or user password."
-        echo ""
         exit 1
 fi
 done
