@@ -46,12 +46,12 @@ esac
 for i in "$@"
 do
         read -p "Enter UUID for "$i": " id
-        useradd -u "$id" -g 5100 -d /home/"$i" -s /bin/csh "$i"
+        useradd -u "$id" -g XXX -d /home/"$i" -s /bin/csh "$i"
 if [[ $? -eq 0 ]]
 then
         chmod 755 /home/"$i"
 
-        cp /home/tfukuyam/.login /home/"$i"
+        cp /home/XXX/.login /home/"$i"
         if [[ $? -eq 0 ]]
         then
                 echo "Added '.login' to "$i"'s home directory."
@@ -63,7 +63,7 @@ then
                 exit 1
         fi
 
-        cp /home/tfukuyam/.cshrc /home/"$i"
+        cp /home/XXX/.cshrc /home/"$i"
         if [[ $? -eq 0 ]]
         then
                 echo "Added '.cshrc' to "$i"'s home directory."
