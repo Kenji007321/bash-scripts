@@ -1,6 +1,17 @@
 # Author: Kenji Nakajima
-# Last update: '2024/07/14'
-# Description: Interactive useradd script (create multiple users at once)
+# Last modified: '2024/07/27'
+# Purpose: Interactively add user accounts to server.
+
+# Description:
+# 1) Check if user already exists
+# 2) Promt for '/etc/passwd' display
+# 3) Input UUID for user
+# 4) Execute the 'useradd' command
+# 5) Copy existing '.login' and '.cshrc' files to user's home directory
+# 6) Change file ownership/permissions for '.login' and '.cshrc'
+# 7) Create user password
+# 8) Use the 'make -C /var/yp' comamnd to synchronize the password to /var/yp
+# 9) Promt for '/etc/passwd' display
 
 
 for t in "$@"
@@ -35,10 +46,47 @@ esac
 for i in "$@"
 do
         read -p "Enter UUID for "$i": " id
-        useradd -u "$id" "$i"
+        useradd -u "$id" -g 5100 -d /home/"$i" -s /bin/csh "$i"
 if [[ $? -eq 0 ]]
 then
+        chmod 755 /home/"$i"
+
+        cp /home/tfukuyam/.login /home/"$i"
+        if [[ $? -eq 0 ]]
+        then
+                echo "Added '.login' to "$i"'s home directory."
+                chown "$i" /home/"$i"/.login
+                chgrp staff /home/"$i"/.login
+        else
+                echo "Failed to add '.cshrc' to "$i"'s home directory.."
+                sleep 0.5
+                exit 1
+        fi
+
+        cp /home/tfukuyam/.cshrc /home/"$i"
+        if [[ $? -eq 0 ]]
+        then
+                echo "Added '.cshrc' to "$i"'s home directory."
+                chown "$i" /home/"$i"/.cshrc
+                chgrp staff /home/"$i"/.cshrc
+        else
+                echo "Failed to add '.cshrc' to "$i"'s home directory.."
+                sleep 0.5
+                exit 1
+        fi
+
+        echo ""
+        
         passwd "$i"
+        if [[ $? -eq 0 ]]
+        then
+                make -C /var/yp
+        else
+                echo "Password creation failed.."
+                echo "Please try again for user "$i" and execute the follwoing command: 'make -C /var/yp'"
+                sleep 0.5
+                exit 1
+        fi
 else
         exit 1
 fi
